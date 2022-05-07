@@ -1,0 +1,38 @@
+name: Package proxy and upload as artifact
+
+on: push
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      # Install Node.js, npm and yarn
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          check-latest: true
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      
+      # Install necessary system dependencies
+      - name: yarn install
+        run: yarn install
+
+      - name: minify
+        run: yarn minify
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: proxy-min
+          path: dist/proxy.min.js
+          if-no-files-found: error

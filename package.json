@@ -1,0 +1,15 @@
+{
+  "name": "tanktrouble-proxy",
+  "version": "0.1.0",
+  "description": "Stupidly simple CORS proxy for TankTrouble",
+  "repository": "https://github.com/asger-finding/tanktrouble-proxy.git",
+  "author": "Asger Finding <asger.finding@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "minify": "mkdirp dist && terser --compress --mangle --output dist/proxy.min.js index.js"
+  },
+  "devDependencies": {
+    "mkdirp": "^1.0.4",
+    "terser": "^5.13.1"
+  }
+}

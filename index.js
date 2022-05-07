@@ -1,3 +1,4 @@
+// Valid TankTrouble AJAX targets
 const targetURLs = {
 	online: 'https://tanktrouble.com/ajax/',
 	beta: 'https://beta.tanktrouble.com/ajax/',
@@ -8,12 +9,15 @@ const targetURLs = {
 
 addEventListener('fetch', event => {
 	event.respondWith((async function() {
+		// Ensure that the method is POST. If not, throw an error.
 		if (event.request.method !== 'POST') return new Response(`Only POST requests are allowed. You attempted: ${ event.request.method }`, { status: 405 });
 
+		// Get the target URL from the request pathname.
 		const originURL = new URL(event.request.url);
 		const [, target] = originURL.pathname.split('/');
 		const targetURL = targetURLs[target] ?? targetURLs.online;
 
+		// Fetch the query on the target URL.
 		const response = await fetch(targetURL, {
 			redirect: 'follow',
 			headers: {
@@ -24,6 +28,7 @@ addEventListener('fetch', event => {
 			body: event.request.body
 		});
 
+		// Return the response.
 		return new Response(await response.arrayBuffer(), {
 			headers: new Headers(response.headers),
 			status: response.status,

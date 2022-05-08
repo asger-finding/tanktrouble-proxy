@@ -18,6 +18,12 @@ addEventListener('fetch', event => {
 		const [, target] = originURL.pathname.split('/');
 		const targetURL = targetURLs[target] ?? targetURLs.online;
 
+		// Get request body and return error if malformed.
+		let json = {};
+		try { json = await request.json(); } catch {
+			return new Response('Request body must be valid JSON.', { status: 400 });
+		}
+
 		// Fetch the query on the target URL.
 		const response = await fetch(targetURL, {
 			redirect: 'follow',
@@ -29,7 +35,7 @@ addEventListener('fetch', event => {
 			body: JSON.stringify({
 				jsonrpc: '2.0',
 				id: 1,
-				...await request.json()
+				...json
 			})
 		});
 

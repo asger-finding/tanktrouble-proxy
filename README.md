@@ -45,5 +45,6 @@ console.log(playerDetails);
 //          result: boolean;
 //          message: string;
 //          data: Record<string, (string | number | boolean | Object)>;
+//      }
 // }
 ```

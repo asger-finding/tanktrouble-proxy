@@ -27,9 +27,9 @@ addEventListener('fetch', event => {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				...await request.json(),
 				jsonrpc: '2.0',
-				id: 1
+				id: 1,
+				...await request.json()
 			})
 		});
 

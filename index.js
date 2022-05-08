@@ -11,9 +11,10 @@ addEventListener('fetch', event => {
 	event.respondWith((async function() {
 		// Ensure that the method is POST. If not, throw the caller an error.
 		if (event.request.method !== 'POST') return new Response('Request must be submitted via POST.', { status: 405 });
+		const { request } = event;
 
 		// Get the target URL from the request pathname.
-		const originURL = new URL(event.request.url);
+		const originURL = new URL(request.url);
 		const [, target] = originURL.pathname.split('/');
 		const targetURL = targetURLs[target] ?? targetURLs.online;
 
@@ -22,10 +23,14 @@ addEventListener('fetch', event => {
 			redirect: 'follow',
 			headers: {
 				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': event.request.headers.get('Origin')
+				'Access-Control-Allow-Origin': request.headers.get('Origin')
 			},
 			method: 'POST',
-			body: event.request.body
+			body: JSON.stringify({
+				...await request.json(),
+				jsonrpc: '2.0',
+				id: 1
+			})
 		});
 
 		// Return the response.

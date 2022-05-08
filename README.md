@@ -29,10 +29,8 @@ const subdomain = 'online';
 // body.method is your query. In this example, we get the playerDetails of '3162693' (the user Commander)
 const playerDetails = await fetch(proxyURL + subdomain, {
   body: JSON.stringify({
-    jsonrpc: "2.0",
-    method: "tanktrouble.getPlayerDetails",
-    id: 1,
-    params: ["3162693"]
+    method: 'tanktrouble.getPlayerDetails',
+    params: [ '3162693' ]
   }),
   method: 'POST'
 }).then(response => response.json());

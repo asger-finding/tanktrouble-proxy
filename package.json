@@ -6,7 +6,7 @@
   "author": "Asger Finding <asger.finding@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "minify": "mkdirp dist && terser --compress --mangle --toplevel --output dist/proxy.min.js index.js"
+    "minify": "mkdirp dist && terser --compress --mangle --toplevel --ecma 2022 --output dist/proxy.min.js index.js"
   },
   "devDependencies": {
     "mkdirp": "^1.0.4",

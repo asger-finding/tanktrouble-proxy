@@ -29,10 +29,6 @@ addEventListener('fetch', event => {
 		});
 
 		// Return the response.
-		return new Response(await response.arrayBuffer(), {
-			headers: response.headers,
-			status: response.status,
-			statusText: response.statusText
-		});
+		return new Response(await response.arrayBuffer(), { headers, status, statusText } = response);
 	})());
 });

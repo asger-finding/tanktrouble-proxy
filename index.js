@@ -9,8 +9,8 @@ const targetURLs = {
 
 addEventListener('fetch', event => {
 	event.respondWith((async function() {
-		// Ensure that the method is POST. If not, throw an error.
-		if (event.request.method !== 'POST') return new Response(`Only POST requests are allowed. You attempted: ${ event.request.method }`, { status: 405 });
+		// Ensure that the method is POST. If not, throw the caller an error.
+		if (event.request.method !== 'POST') return new Response('Request must be submitted via POST.', { status: 405 });
 
 		// Get the target URL from the request pathname.
 		const originURL = new URL(event.request.url);
@@ -30,7 +30,7 @@ addEventListener('fetch', event => {
 
 		// Return the response.
 		return new Response(await response.arrayBuffer(), {
-			headers: new Headers(response.headers),
+			headers: response.headers,
 			status: response.status,
 			statusText: response.statusText
 		});
